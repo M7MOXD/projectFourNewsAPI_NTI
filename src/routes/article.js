@@ -44,7 +44,7 @@ routers.get('/articles', auth, async (req, res) => {
 routers.get('/articles/:id', auth, async (req, res) => {
   try {
     const _id = req.params.id;
-    const article = await Article.findOne({ _id, owner: req.reporter._id });
+    const article = await Article.findOne({ _id, reporter: req.reporter._id });
     if (!article) {
       return res.status(404).send('Unable to fine the Article');
     }
@@ -59,7 +59,7 @@ routers.patch('/articles/:id', auth, async (req, res) => {
   try {
     const _id = req.params.id;
     const article = await Article.findOneAndUpdate(
-      { _id, owner: req.reporter.owner },
+      { _id, reporter: req.reporter._id },
       req.body,
       {
         // return new data after update
@@ -83,7 +83,7 @@ routers.delete('/articles/:id', auth, async (req, res) => {
     const _id = req.params.id;
     const article = await Article.findOneAndDelete({
       _id,
-      owner: req.reporter._id,
+      reporter: req.reporter._id,
     });
     if (!article) {
       return res.status(404).send('Unable to fine the Article');

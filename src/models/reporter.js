@@ -107,6 +107,19 @@ reporterSchema.virtual('articles', {
   foreignField: 'reporter',
 });
 
+// hide sensitive data --> password - tokens
+reporterSchema.methods.toJSON = function () {
+  // document
+  const reporter = this;
+  // convert form document to object
+  const reporterObj = reporter.toObject();
+
+  delete reporterObj.password;
+  delete reporterObj.tokens;
+
+  return reporterObj;
+};
+
 // Create model Reporter
 const Reporter = mongoose.model('Reporter', reporterSchema);
 
