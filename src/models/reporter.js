@@ -61,7 +61,11 @@ const reporterSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamps: true }
+  {
+    timestamps: {
+      currentTime: () => new Date().getTime() + 7200000,
+    },
+  }
 );
 
 // Schema Pre
@@ -94,7 +98,10 @@ reporterSchema.statics.findByCredentials = async (email, password) => {
 // Generate Token
 reporterSchema.methods.generateToken = async function () {
   const reporter = this;
-  const token = jwt.sign({ _id: reporter._id.toString() }, 'node');
+  const token = jwt.sign(
+    { _id: reporter._id.toString() },
+    process.env.JWT_SECRET
+  );
   reporter.tokens = reporter.tokens.concat(token);
   await reporter.save();
   return token;

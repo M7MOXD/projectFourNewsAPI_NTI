@@ -22,7 +22,7 @@ routers.post('/narticle', auth, async (req, res) => {
     newArticle.save();
     res.send(newArticle);
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send(e);
   }
 });
 
@@ -31,12 +31,9 @@ routers.get('/articles', auth, async (req, res) => {
   try {
     await req.reporter.populate('articles');
     const articles = req.reporter.articles;
-    if (articles.length === 0) {
-      return res.status(404).send('No articles Available');
-    }
     res.send(articles);
   } catch (e) {
-    res.status(404).send(e.message);
+    res.status(404).send(e);
   }
 });
 
@@ -50,7 +47,7 @@ routers.get('/articles/:id', auth, async (req, res) => {
     }
     res.send(article);
   } catch (e) {
-    res.status(404).send(e.message);
+    res.status(404).send(e);
   }
 });
 
@@ -73,7 +70,7 @@ routers.patch('/articles/:id', auth, async (req, res) => {
     }
     res.send(article);
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send(e);
   }
 });
 
@@ -88,9 +85,9 @@ routers.delete('/articles/:id', auth, async (req, res) => {
     if (!article) {
       return res.status(404).send('Unable to fine the Article');
     }
-    res.send('Article Deleted');
+    res.send({});
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send(e);
   }
 });
 

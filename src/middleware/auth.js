@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
     // GET token
     const token = req.header('Authorization').replace('Bearer ', '');
     // decode token --> return: _id, iat
-    const decode = jwt.verify(token, 'node');
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
     // GET reporter by _id
     const reporter = await Reporter.findOne({
       _id: decode._id,

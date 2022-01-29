@@ -20,7 +20,7 @@ routers.post('/signup', async (req, res) => {
     const token = await newReporter.generateToken();
     res.send({ newReporter, token });
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send(e);
   }
 });
 
@@ -36,7 +36,7 @@ routers.post('/login', async (req, res) => {
     const token = await reporter.generateToken();
     res.send({ reporter, token });
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send(e);
   }
 });
 
@@ -56,7 +56,7 @@ routers.delete('/logout', auth, async (req, res) => {
     await req.reporter.save();
     res.send('Logout Successfully');
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send(e);
   }
 });
 
@@ -68,7 +68,7 @@ routers.delete('/logoutall', auth, async (req, res) => {
     await req.reporter.save();
     res.send('Logout From All Devices Successfully');
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send(e);
   }
 });
 
@@ -79,8 +79,8 @@ routers.patch('/update', auth, async (req, res) => {
     updates.forEach((update) => (req.reporter[update] = req.body[update]));
     await req.reporter.save();
     res.send(req.reporter);
-  } catch (error) {
-    res.status(400).send(error);
+  } catch (e) {
+    res.status(400).send(e);
   }
 });
 
@@ -88,9 +88,9 @@ routers.patch('/update', auth, async (req, res) => {
 routers.delete('/delete', auth, async (req, res) => {
   try {
     req.reporter.delete();
-    res.send('Reporter Deleted');
-  } catch (error) {
-    res.status(400).send(error);
+    res.send({});
+  } catch (e) {
+    res.status(400).send(e);
   }
 });
 

@@ -2,13 +2,24 @@
 // require express
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+
+// require dotenv
+require('dotenv').config();
+
+// require cors
+const cors = require('cors');
 
 // require da mongoose
 require('./db/mongoose');
 
+// Create port
+const port = process.env.PORT;
+
 // Turn JSON to Object
 app.use(express.json());
+
+// USE CORS
+app.use(cors());
 
 // Routes
 // Home Page Route
