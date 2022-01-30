@@ -54,7 +54,7 @@ routers.delete('/logout', auth, async (req, res) => {
       return el !== req.token;
     });
     await req.reporter.save();
-    res.send('Logout Successfully');
+    res.send({});
   } catch (e) {
     res.status(400).send(e);
   }
@@ -66,7 +66,7 @@ routers.delete('/logoutall', auth, async (req, res) => {
   try {
     req.reporter.tokens = [];
     await req.reporter.save();
-    res.send('Logout From All Devices Successfully');
+    res.send({});
   } catch (e) {
     res.status(400).send(e);
   }
